@@ -7,7 +7,7 @@
             "precio": 50000,
             "stock": 1,
             "imagen": "cuadro3.jpg",
-            "categoria": "cuadros"
+            "categoria": 1
         },
         {
             "id": 2,
@@ -16,7 +16,7 @@
             "precio": 70000,
             "stock": 0,
             "imagen": "cuadro2.jpg",
-            "categoria": "cuadros"
+            "categoria": 1
         },
         {
             "id": 3,
@@ -25,7 +25,7 @@
             "precio": 55000,
             "stock": 1,
             "imagen": "cuadro1.jpg",
-            "categoria": "cuadros"
+            "categoria": 1
         },
         {
             "id": 4,
@@ -34,7 +34,7 @@
             "precio": 60000,
             "stock": 1,
             "imagen": "cuadro4.jpg",
-            "categoria": "cuadros"
+            "categoria": 1
         },
         {
             "id": 5,
@@ -43,7 +43,7 @@
             "precio": 80000,
             "stock": 1,
             "imagen": "escultura1.jpeg",
-            "categoria": "esculturas"
+            "categoria": 2
         },
         {
             "id": 6,
@@ -52,7 +52,17 @@
             "precio": 3000,
             "stock": 3,
             "imagen": "escultura2.png",
-            "categoria": "esculturas"
+            "categoria": 2
+        }
+    ],
+    "categorias": [
+        {
+            "id": 1,
+            "nombre": "Cuadros"
+        },
+        {
+            "id": 2,
+            "nombre": "Esculturas"
         }
     ]
 }

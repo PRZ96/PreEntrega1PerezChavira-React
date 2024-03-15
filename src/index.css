@@ -21,6 +21,8 @@ h1, h2, h3 {
 
 h1 {
   font-size: 3.8rem;
+  color: var(--color2);
+  text-decoration: none !important;
 }
 
 @media (min-width: 768px) {
@@ -49,7 +51,7 @@ h3 {
   }
 }
 
-#navigation a:hover {
+#navigation :is(p, .cart-widget-container):hover  {
   color: var(--color4) !important;
 }
 

@@ -1,6 +1,6 @@
-const Item = ({ item }) => {
+const ItemDetail = ({ item }) => {
+    console.log(item);
     return (
-      <div className="col-lg-3 mb-4">
         <div className="card product h-100">
           <div className="aspect-ratio-container">
             <img
@@ -21,9 +21,8 @@ const Item = ({ item }) => {
             </a>
           </div>
         </div>
-      </div>
     );
   };
   
-  export default Item;
+  export default ItemDetail;
   

@@ -1,15 +1,20 @@
+import { Link } from "react-router-dom"
 import CartWidget from "./CartWidget"
 
-const Navbar = () => {
+const Navbar = ({productCategories}) => {
   return (
     <>
         <header className="py-4 d-none d-lg-block">
+        <Link className="text-decoration-none" to={'/'}>
             <h1 className="text-center text-uppercase">PRZ <span className="text-third text-uppercase">Art Gallery</span></h1>
+        </Link>
         </header>
 
         <div className="border-top py-1">
             <div className="navbar navbar-expand-lg navbar-light container">
-                <a className="navbar-brand d-lg-none fw-bold text-uppercase text-secondary fs-1" href="index.html">PRZ <span className="text-third">ART GALLERY</span></a>
+            <Link className="text-decoration-none" to={'/'}>
+            <h1 className="navbar-brand d-lg-none fw-bold text-uppercase text-secondary fs-1">PRZ <span className="text-third">ART GALLERY</span></h1>
+            </Link>
                 <div className="d-flex align-items-center">
                 <div className="pe-4 d-lg-none">
                     <CartWidget />
@@ -20,9 +25,19 @@ const Navbar = () => {
                 </div>
                 <div id="navigation" className="collapse navbar-collapse">
                     <nav className="navbar-nav container text-center d-flex flex-md-row justify-content-md-between align-items-center">
-                        <a className="text-dark text-decoration-none fw-bold" href="index.html">Inicio</a>
-                        <a className="text-dark text-decoration-none fw-bold" href="#">Productos</a>
-                        <a className="text-dark text-decoration-none fw-bold d-none d-lg-block" href="#"><CartWidget /></a>
+                    <Link className="text-decoration-none" to={'/'}>
+                        <p className="text-dark fw-bold">Inicio</p>
+                    </Link>
+                    {productCategories.map((category) => {
+                        return (
+                            <Link className="text-decoration-none" key={category.id} to={`/category/${category.id}`}>
+                                <p className="text-dark fw-bold">{category.nombre}</p>
+                            </Link>
+                        )
+                    })}
+                    <Link className="text-decoration-none" to={'/'}>
+                        <CartWidget />
+                    </Link>
                     </nav>
                 </div>
             </div>
