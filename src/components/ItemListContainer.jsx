@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import ItemDetail from "./ItemDetail";
+import Item from "./Item";
 
 const ItemListContainer = ({ allProducts }) => {
   const { id } = useParams();
@@ -31,7 +31,7 @@ const ItemListContainer = ({ allProducts }) => {
               key={item.id}
               to={`/item/${item.id}`}
             >
-              <ItemDetail item={item} />
+              <Item item={item} />
             </Link>
           ))
         ) : (

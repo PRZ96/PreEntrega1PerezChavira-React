@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ItemDetail from "./ItemDetail";
+import Item from "./Item";
 
 const ItemDetailContainer = ({ allProducts }) => {
   const { id } = useParams();
@@ -25,7 +25,7 @@ const ItemDetailContainer = ({ allProducts }) => {
       {product ? (
         <div className="row products-detail-container d-flex justify-content-center my-5">
           <div className="col-lg-6">
-            <ItemDetail item={product} />
+            <Item item={product} />
           </div>
         </div>
       ) : (
