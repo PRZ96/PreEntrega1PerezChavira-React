@@ -37,8 +37,8 @@ function App() {
         <Routes>
           <Route path='/' element={<ItemListContainer allProducts={allProducts} />} />
           <Route path='/category/:id' element={<ItemListContainer allProducts={allProducts} />} />
-{/*           <Route path='/item/:id' element={<ItemDetailContainer />} />
- */}        </Routes>
+          <Route path='/item/:id' element={<ItemDetailContainer allProducts={allProducts}/>} />
+        </Routes>
       </Router>
     </>
   )

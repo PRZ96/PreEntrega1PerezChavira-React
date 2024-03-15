@@ -13,7 +13,7 @@ const ItemDetail = ({ item }) => {
             <p className="mt-4">{item.descripcion}</p>
             <p className="fs-1 fw-bold price">${item.precio}.00</p>
             <span
-              className={`btn ${item.stock > 0  ? 'btn-primary' : 'btn-danger disabled-button'} fs-3 fw-bold py-3 text-uppercase d-block`}
+              className={`btn ${item.stock > 0  ? 'btn-primary' : 'btn-danger disabled-button'} fs-4 fw-bold py-3 text-uppercase d-block`}
               href="#"
             >
               {item.stock > 0 ? "Agregar al carrito" : "Agotado"}

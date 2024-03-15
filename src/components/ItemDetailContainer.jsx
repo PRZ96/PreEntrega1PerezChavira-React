@@ -1,42 +1,38 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import products from '../utils/MocksAsync.json';
+import { useParams } from "react-router-dom";
 import ItemDetail from "./ItemDetail";
-import { fakeApiCall } from "../utils/fakeApiCall";
 
-const ItemDetailContainer = () => {
+const ItemDetailContainer = ({ allProducts }) => {
   const { id } = useParams();
-  const [response, setResponse] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [item, setItem] = useState([]);
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
-    fakeApiCall(products).then(res => {setResponse(res); setLoading(false);});
-  }, []);
-
-useEffect(() => {
-    if (response.productos && response.productos.length > 0){
-        const productById = getProductById(id);
-        setItem(productById);
+    const productById = getProductById(id);
+    if (productById) {
+      setProduct(productById);
     }
-}, [response]);
+  }, [id, allProducts]);
 
-    let getProductById = (prodId) => {
-        if(prodId){
-            return response.productos.find((product) => product.id === parseInt(prodId));
-        }
+  const getProductById = (prodId) => {
+    if (prodId && allProducts) {
+      return allProducts.find((product) => product.id === parseInt(prodId));
     }
-  
-if(loading) return <h2>Loading...</h2>
+    return null;
+  };
 
-return (
-<div className="container-xl">
-    <div className="row products-container my-5">
-            <ItemDetail item={item} />
+  return (
+    <div className="container-xl">
+      {product ? (
+        <div className="row products-detail-container d-flex justify-content-center my-5">
+          <div className="col-lg-6">
+            <ItemDetail item={product} />
+          </div>
+        </div>
+      ) : (
+        <p>Cargando producto...</p>
+      )}
     </div>
-</div>
-)
-}
+  );
+};
 
-export default ItemDetailContainer
+export default ItemDetailContainer;
