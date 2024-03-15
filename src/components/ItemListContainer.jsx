@@ -1,42 +1,31 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import products from "../utils/MocksAsync.json";
 import ItemDetail from "./ItemDetail";
-import { fakeApiCall } from "../utils/fakeApiCall";
 
-const ItemListContainer = () => {
+const ItemListContainer = ({allProducts}) => {
   const { id } = useParams();
-  const [response, setResponse] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [productList, setProductList] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
-    fakeApiCall(products).then((res) => {
-      setResponse(res);
-      setLoading(false);
-    })
-    .then();
-  }, []);
+    const productsByCategory = getProductsByCategory(id);
+    setProductList(productsByCategory);
+  }, [id]);
 
   const getProductsByCategory = (catId) => {
     if (catId) {
-      return response.productos.filter(
+      return allProducts.filter(
         (product) => product.categoria === parseInt(catId)
       );
     } else {
-      return response.productos;
+      return allProducts;
     }
   };
-
-  const productsByCategory = getProductsByCategory(id);
-
-  if (loading) return <h2>Loading...</h2>;
 
   return (
     <div className="container-xl">
       <div className="row products-container my-5">
-        {productsByCategory.length > 0 &&
-          productsByCategory.map((item, index) => {
+        {productList.length > 0 &&
+          productList.map((item, index) => {
             return (
               <Link
                 className="col-lg-3 mb-4 text-decoration-none"

@@ -12,23 +12,33 @@ function App() {
   const [response, setResponse] = useState([]);
   const [loading, setLoading] = useState(true);
   const [productCategories, setProductCategories] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
 
-  useEffect(() => {
-    setLoading(true);
-    fakeApiCall(categories).then(res => {setResponse(res); setLoading(false); setProductCategories(res.categorias);});
-  }, []);
+    useEffect(() => {
+      setLoading(true);
+      fakeApiCall(categories).then(res => { 
+        setResponse(res); 
+        setProductCategories(res.categorias);
+        setAllProducts(res.productos);
+        setLoading(false); 
+       });
+    }, []);
 
-  if(loading) return <h2>Loading...</h2>
+    /* useEffect(() => {
+      console.log(allProducts, productCategories);
+    }, [response]); */
+
+  if (loading) return <h2>Loading...</h2>
 
   return (
     <>
       <Router>
-        <Navbar productCategories={productCategories}/>
+        <Navbar productCategories={productCategories} />
         <Routes>
-          <Route path='/' element={<ItemListContainer />}/>
-          <Route path='/category/:id' element={<ItemListContainer />}/>
-          <Route path='/item/:id' element={<ItemDetailContainer />}/>
-        </Routes>
+          <Route path='/' element={<ItemListContainer allProducts={allProducts} />} />
+          <Route path='/category/:id' element={<ItemListContainer allProducts={allProducts} />} />
+{/*           <Route path='/item/:id' element={<ItemDetailContainer />} />
+ */}        </Routes>
       </Router>
     </>
   )
