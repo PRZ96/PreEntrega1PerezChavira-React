@@ -1,0 +1,58 @@
+{
+    "productos": [
+        {
+            "id": 1,
+            "nombre": "La noche estrellada",
+            "descripcion": "Cuadro pintado por un famoso artista",
+            "precio": 50000,
+            "stock": 1,
+            "imagen": "cuadro3.jpg",
+            "categoria": "cuadros"
+        },
+        {
+            "id": 2,
+            "nombre": "Cuadro olas",
+            "descripcion": "Cuadro que muestra un gran estilo japones",
+            "precio": 70000,
+            "stock": 0,
+            "imagen": "cuadro2.jpg",
+            "categoria": "cuadros"
+        },
+        {
+            "id": 3,
+            "nombre": "Cuadro colores de verano",
+            "descripcion": "Hermoso cuadro con colores calidos y un gran contraste",
+            "precio": 55000,
+            "stock": 1,
+            "imagen": "cuadro1.jpg",
+            "categoria": "cuadros"
+        },
+        {
+            "id": 4,
+            "nombre": "Cuadro el campo nocturno",
+            "descripcion": "Cuadro pintado a mano por estudiante de la academia de arte",
+            "precio": 60000,
+            "stock": 1,
+            "imagen": "cuadro4.jpg",
+            "categoria": "cuadros"
+        },
+        {
+            "id": 5,
+            "nombre": "Ángel de metal",
+            "descripcion": "Escultura de un ángel hecho de metal, con alas extendidas y una expresión serena.",
+            "precio": 80000,
+            "stock": 1,
+            "imagen": "escultura1.jpeg",
+            "categoria": "esculturas"
+        },
+        {
+            "id": 6,
+            "nombre": "Bidón",
+            "descripcion": "Escultura de un bidón de metal reciclado, transformado en una pieza artística.",
+            "precio": 3000,
+            "stock": 3,
+            "imagen": "escultura2.png",
+            "categoria": "esculturas"
+        }
+    ]
+}
