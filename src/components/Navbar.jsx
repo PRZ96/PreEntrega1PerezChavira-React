@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom"
 import CartWidget from "./CartWidget"
+import { useContext } from "react"
+import { ProductContext } from "../context/ProductsContext"
 
-const Navbar = ({productCategories}) => {
+const Navbar = () => {
+    const { productCategories } = useContext(ProductContext);
   return (
     <>
         <header className="py-4 d-none d-lg-block">

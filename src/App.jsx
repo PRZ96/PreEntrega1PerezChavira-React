@@ -1,46 +1,60 @@
-import './App.css'
-import { useEffect, useState } from 'react'
-import Navbar from './components/Navbar'
-import ItemListContainer from './components/ItemListContainer'
-import ItemDetailContainer from './components/ItemDetailContainer'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { fakeApiCall } from './utils/fakeApiCall'
-import categories from './utils/MocksAsync.json'
+import "./App.css";
+import { useContext, useEffect, useState } from "react";
+import Navbar from "./components/Navbar";
+import ItemListContainer from "./components/ItemListContainer";
+import ItemDetailContainer from "./components/ItemDetailContainer";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { fakeApiCall } from "./utils/fakeApiCall";
+import categories from "./utils/MocksAsync.json";
+import { ProductContext, ProductProvider } from "./context/ProductsContext";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
-  const [response, setResponse] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [productCategories, setProductCategories] = useState([]);
-  const [allProducts, setAllProducts] = useState([]);
+  const { setAllProducts, setProductCategories } = useContext(ProductContext);
 
-    useEffect(() => {
-      setLoading(true);
-      fakeApiCall(categories).then(res => { 
-        setResponse(res); 
+  useEffect(() => {
+    setLoading(true);
+    fakeApiCall(categories)
+      .then((res) => {
         setProductCategories(res.categorias);
         setAllProducts(res.productos);
-        setLoading(false); 
-       });
-    }, []);
-
-    /* useEffect(() => {
-      console.log(allProducts, productCategories);
-    }, [response]); */
-
-  if (loading) return <h2>Loading...</h2>
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        // Manejo de errores: puedes mostrar un mensaje de error o hacer algo adecuado aquí
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [setAllProducts, setProductCategories]);
 
   return (
     <>
-      <Router>
-        <Navbar productCategories={productCategories} />
-        <Routes>
-          <Route path='/' element={<ItemListContainer allProducts={allProducts} />} />
-          <Route path='/category/:id' element={<ItemListContainer allProducts={allProducts} />} />
-          <Route path='/item/:id' element={<ItemDetailContainer allProducts={allProducts}/>} />
-        </Routes>
-      </Router>
+      {loading ? (
+        <h2>Loading...</h2>
+      ) : (
+        <CartProvider>
+          <Router>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<ItemListContainer />} />
+              <Route path="/category/:id" element={<ItemListContainer />} />
+              <Route path="/item/:id" element={<ItemDetailContainer />} />
+            </Routes>
+          </Router>
+        </CartProvider>
+      )}
     </>
-  )
+  );
 }
 
-export default App
+function AppWithProvider() {
+  return (
+    <ProductProvider>
+      <App />
+    </ProductProvider>
+  );
+}
+
+export default AppWithProvider;

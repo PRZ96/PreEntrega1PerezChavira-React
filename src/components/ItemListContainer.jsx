@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Item from "./Item";
+import { ProductContext } from "../context/ProductsContext";
 
-const ItemListContainer = ({ allProducts }) => {
+const ItemListContainer = () => {
+  const {allProducts} = useContext(ProductContext);
   const { id } = useParams();
   const [productList, setProductList] = useState([]);
 
