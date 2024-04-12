@@ -8,6 +8,7 @@ import { fakeApiCall } from "./utils/fakeApiCall";
 import categories from "./utils/MocksAsync.json";
 import { ProductContext, ProductProvider } from "./context/ProductsContext";
 import { CartProvider } from "./context/CartContext";
+import Loader from "./components/Loader";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -32,7 +33,7 @@ function App() {
   return (
     <>
       {loading ? (
-        <h2>Loading...</h2>
+        <Loader />
       ) : (
         <CartProvider>
           <Router>
