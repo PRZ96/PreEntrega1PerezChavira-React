@@ -31,13 +31,15 @@ const Navbar = () => {
                     <Link className="text-decoration-none" to={'/'}>
                         <p className="text-dark fw-bold">Inicio</p>
                     </Link>
-                    {productCategories.map((category) => {
-                        return (
-                            <Link className="text-decoration-none" key={category.id} to={`/category/${category.id}`}>
-                                <p className="text-dark fw-bold">{category.nombre}</p>
-                            </Link>
-                        )
-                    })}
+                    {
+                        productCategories.map((category) => {
+                            return (
+                                <Link className="text-decoration-none" key={category.id} to={`/category/${category.id}`}>
+                                    <p className="text-dark fw-bold">{category.nombre}</p>
+                                </Link>
+                            )
+                        })
+                    }
                     <Link className="text-decoration-none" to={'/'}>
                         <CartWidget />
                     </Link>

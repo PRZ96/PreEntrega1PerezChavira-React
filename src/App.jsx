@@ -9,26 +9,51 @@ import categories from "./utils/MocksAsync.json";
 import { ProductContext, ProductProvider } from "./context/ProductsContext";
 import { CartProvider } from "./context/CartContext";
 import Loader from "./components/Loader";
+import { collection, getDocs, getFirestore, query } from "firebase/firestore";
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const { setAllProducts, setProductCategories } = useContext(ProductContext);
+  const [prod, setProd] = useState([]);
+  const { setAllProducts, setProductCategories, loading, setLoading } = useContext(ProductContext);
 
   useEffect(() => {
     setLoading(true);
-    fakeApiCall(categories)
-      .then((res) => {
-        setProductCategories(res.categorias);
-        setAllProducts(res.productos);
+  
+    const db = getFirestore();
+    const prodQueryRef = query(collection(db, 'productos'));
+    const catQueryRef = query(collection(db, 'categorias'));
+  
+    Promise.all([getDocs(prodQueryRef), getDocs(catQueryRef)])
+      .then(([prodSnapshot, catSnapshot]) => {
+        const productArray = [];
+        const categoriesArray = [];
+  
+        if (prodSnapshot.size === 0) {
+          console.log("No hay resultados de productos");
+        } else {
+          prodSnapshot.forEach((item) => {
+            productArray.push(item.data());
+          });
+        }
+  
+        if (catSnapshot.size === 0) {
+          console.log("No hay resultados de categorías");
+        } else {
+          catSnapshot.forEach((item) => {
+            categoriesArray.push(item.data());
+          });
+        }
+  
+        setAllProducts(productArray);
+        setProductCategories(categoriesArray);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
-        // Manejo de errores: puedes mostrar un mensaje de error o hacer algo adecuado aquí
+        console.error("Error al obtener datos:", error);
       })
       .finally(() => {
         setLoading(false);
       });
-  }, [setAllProducts, setProductCategories]);
+  }, []);
+  
 
   return (
     <>

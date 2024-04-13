@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Item from "./Item";
 import { ProductContext } from "../context/ProductsContext";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
 
 const ItemListContainer = () => {
-  const {allProducts} = useContext(ProductContext);
+  const { allProducts } = useContext(ProductContext);
   const { id } = useParams();
   const [productList, setProductList] = useState([]);
 
@@ -14,17 +14,21 @@ const ItemListContainer = () => {
     setProductList(productsByCategory);
   }, [id, allProducts]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     const db = getFirestore();
 
-    const prodRef = doc(db, 'productos', 'bCU1PlCVCsP6eTgKb7iB')
-    getDoc(prodRef).then((snapshot) => {
-      if(snapshot.exists()) {
-        console.log({ ...snapshot.data() })
+    const queryRef = query(collection(db, 'productos'), where("precio", "==", 70000))
+    getDocs(queryRef).then((snapshot) => {
+      if(snapshot.size === 0) {
+        console.log("no results")
+      } else {
+        snapshot.docs.map( item => {
+          console.log(item.data())
+        });
       }
     });
     
-  }, []);
+  }, []); */
 
   const getProductsByCategory = (catId) => {
     if (catId) {
