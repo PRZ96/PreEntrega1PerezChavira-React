@@ -1,7 +1,7 @@
 import { useContext,useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Item from "./Item";
 import { ProductContext } from "../context/ProductsContext";
+import ItemDetail from "./ItemDetail";
 
 const ItemDetailContainer = () => {
   const {allProducts} = useContext(ProductContext);
@@ -27,7 +27,7 @@ const ItemDetailContainer = () => {
       {product ? (
         <div className="row products-detail-container d-flex justify-content-center my-5">
           <div className="col-lg-6">
-            <Item item={product} />
+            <ItemDetail item={product} />
           </div>
         </div>
       ) : (

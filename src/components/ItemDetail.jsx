@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import ItemQuantitySelector from "./ItemQuantitySelector";
 
-const Item = ({ item }) => {
+const ItemDetail = ({ item }) => {
   const [quantity, setQuantity] = useState(1); 
   const { addToCart, cart  } = useContext(CartContext);
 
@@ -29,6 +29,7 @@ const Item = ({ item }) => {
       setQuantity(1);
     }
   };
+  
 
   const handleIncreaseQuantity = () => {
     if (item.stock > quantity) {
@@ -55,6 +56,7 @@ const Item = ({ item }) => {
       </Link>
       <div className="card-body text-center text-white bg-secondary p-5">
         <h3>{item.nombre}</h3>
+        <p className="mt-4">{item.descripcion}</p>
         <p className="fs-1 fw-bold price">${item.precio}.00</p>
         <div className="d-flex flex-column">
           {item.stock > 0 ? (
@@ -78,4 +80,4 @@ const Item = ({ item }) => {
   );
 };
 
-export default Item;
+export default ItemDetail;
