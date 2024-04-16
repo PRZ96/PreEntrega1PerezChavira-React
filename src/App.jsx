@@ -1,18 +1,16 @@
 import "./App.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import ItemListContainer from "./components/ItemListContainer";
 import ItemDetailContainer from "./components/ItemDetailContainer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { fakeApiCall } from "./utils/fakeApiCall";
-import categories from "./utils/MocksAsync.json";
 import { ProductContext, ProductProvider } from "./context/ProductsContext";
 import { CartProvider } from "./context/CartContext";
 import Loader from "./components/Loader";
+import Checkout from "./components/Checkout";
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
 
 function App() {
-  const [prod, setProd] = useState([]);
   const { setAllProducts, setProductCategories, loading, setLoading } = useContext(ProductContext);
 
   useEffect(() => {
@@ -52,7 +50,7 @@ function App() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [setAllProducts]);
   
 
   return (
@@ -67,6 +65,7 @@ function App() {
               <Route path="/" element={<ItemListContainer />} />
               <Route path="/category/:id" element={<ItemListContainer />} />
               <Route path="/item/:id" element={<ItemDetailContainer />} />
+              <Route path="/checkout" element={<Checkout />} />
             </Routes>
           </Router>
         </CartProvider>

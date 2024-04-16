@@ -16,14 +16,8 @@ const ItemDetail = ({ item }) => {
     setQuantity(newQuantity);
   };
 
-  const handleAddToCart = () => {
-    const product = {
-      id: item.id,
-      nombre: item.nombre,
-      precio: item.precio,
-      cantidad: quantity,
-      stock: item.stock
-    };
+  const handleAddToCart = (product) => {
+    product.cantidad = quantity;
     addToCart(product);
     if(item.stock - quantity === 0) {
       setQuantity(1);
@@ -69,7 +63,7 @@ const ItemDetail = ({ item }) => {
             className={`btn ${
               item.stock > 0 ? "btn-primary" : "btn-danger disabled-button"
             } fs-4 fw-bold py-3 text-uppercase`}
-            onClick={handleAddToCart}
+            onClick={() => handleAddToCart(item)}
             disabled={item.stock === 0}
           >
             {item.stock > 0 ? "Agregar al carrito" : "Agotado"}

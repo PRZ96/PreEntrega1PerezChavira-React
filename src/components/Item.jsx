@@ -1,31 +1,15 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import ItemQuantitySelector from "./ItemQuantitySelector";
 
 const Item = ({ item }) => {
   const [quantity, setQuantity] = useState(1); 
-  const { addToCart, cart  } = useContext(CartContext);
-
-  useEffect(() => {
-    console.log(cart);
-  }, [cart]);
-
-  const handleQuantityChange = (event) => {
-    const newQuantity = parseInt(event.target.value);
-    setQuantity(newQuantity);
-  };
+  const { addToCart } = useContext(CartContext);
 
   const handleAddToCart = () => {
-    const product = {
-      id: item.id,
-      nombre: item.nombre,
-      precio: item.precio,
-      cantidad: quantity,
-      stock: item.stock
-    };
-    addToCart(product);
-    if(item.stock - quantity === 0) {
+    addToCart(item, quantity); // Pasar la cantidad como argumento separado
+    if (item.stock - quantity <= 0) {
       setQuantity(1);
     }
   };
@@ -42,6 +26,9 @@ const Item = ({ item }) => {
     }
   };
 
+  const buttonClass = item.stock > 0 ? "btn-primary" : "btn-danger disabled-button";
+  const buttonText = item.stock > 0 ? "Agregar al carrito" : "Agotado";
+
   return (
     <div className="card product h-100">
       <Link to={`/item/${item.id}`}>
@@ -57,20 +44,20 @@ const Item = ({ item }) => {
         <h3>{item.nombre}</h3>
         <p className="fs-1 fw-bold price">${item.precio}.00</p>
         <div className="d-flex flex-column">
-          {item.stock > 0 ? (
-            <ItemQuantitySelector handleQuantityChange={handleQuantityChange} handleDecreaseQuantity={handleDecreaseQuantity} handleIncreaseQuantity={handleIncreaseQuantity} quantity={quantity} />
-          ) : (
-            ""
+          {item.stock > 0 && (
+            <ItemQuantitySelector 
+              handleDecreaseQuantity={handleDecreaseQuantity} 
+              handleIncreaseQuantity={handleIncreaseQuantity} 
+              quantity={quantity} 
+            />
           )}
 
           <button
-            className={`btn ${
-              item.stock > 0 ? "btn-primary" : "btn-danger disabled-button"
-            } fs-4 fw-bold py-3 text-uppercase`}
+            className={`btn fs-4 fw-bold py-3 text-uppercase ${buttonClass}`}
             onClick={handleAddToCart}
-            disabled={item.stock === 0}
+            disabled={item.stock === 0 || item.stock < quantity} // Usar la cantidad seleccionada
           >
-            {item.stock > 0 ? "Agregar al carrito" : "Agotado"}
+            {buttonText}
           </button>
         </div>
       </div>

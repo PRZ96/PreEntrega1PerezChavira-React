@@ -31,7 +31,7 @@ const ItemDetailContainer = () => {
           </div>
         </div>
       ) : (
-        <p>Cargando producto...</p>
+        <p>No se encuentra el producto especificado.</p>
       )}
     </div>
   );
