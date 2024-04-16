@@ -5,16 +5,25 @@ import ItemListContainer from "./components/ItemListContainer";
 import ItemDetailContainer from "./components/ItemDetailContainer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ProductContext, ProductProvider } from "./context/ProductsContext";
-import { CartProvider } from "./context/CartContext";
+import { CartProvider, CartContext } from "./context/CartContext";
 import Loader from "./components/Loader";
 import Checkout from "./components/Checkout";
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
 
 function App() {
   const { setAllProducts, setProductCategories, loading, setLoading } = useContext(ProductContext);
+  const { cart, setCart} = useContext(CartContext);
 
   useEffect(() => {
     setLoading(true);
+
+    const cartStorage = JSON.parse(localStorage.getItem("cart"));
+
+    if(cartStorage) {
+      setCart(cartStorage)
+    } else {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
   
     const db = getFirestore();
     const prodQueryRef = query(collection(db, 'productos'));
@@ -58,7 +67,6 @@ function App() {
       {loading ? (
         <Loader />
       ) : (
-        <CartProvider>
           <Router>
             <Navbar />
             <Routes>
@@ -68,7 +76,6 @@ function App() {
               <Route path="/checkout" element={<Checkout />} />
             </Routes>
           </Router>
-        </CartProvider>
       )}
     </>
   );
@@ -77,7 +84,9 @@ function App() {
 function AppWithProvider() {
   return (
     <ProductProvider>
-      <App />
+      <CartProvider>
+        <App />
+      </CartProvider>
     </ProductProvider>
   );
 }

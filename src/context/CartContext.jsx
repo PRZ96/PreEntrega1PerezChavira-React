@@ -4,6 +4,9 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [numberOfItemsInCart, setNumberOfItemsInCart] = useState(0);
+  const [cartTotal, setCartTotal] = useState(0);
+  const [grossTotal, setGrossTotal] = useState(0);
+  const [iva, setIva] = useState(0);
 
   const addToCart = (product, quantityToAdd) => {
     if (!product.stock) {
@@ -26,7 +29,7 @@ export const CartProvider = ({ children }) => {
           title: `No tenemos suficiente stock para el producto ${product.nombre}`,
           text: "Agregaremos la cantidad total en stock a tu carrito",
         }).then(() => {
-          localStorage.setItem("products", JSON.stringify(updatedCart));
+          localStorage.setItem("cart", JSON.stringify(updatedCart));
         });
       } else {
         updatedCart[existingProductIndex].cantidad += quantityToAdd;
@@ -38,7 +41,7 @@ export const CartProvider = ({ children }) => {
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
-          localStorage.setItem("products", JSON.stringify(updatedCart));
+          localStorage.setItem("cart", JSON.stringify(updatedCart));
         });
       }
     } else {
@@ -51,7 +54,7 @@ export const CartProvider = ({ children }) => {
         showConfirmButton: false,
         timer: 1500,
       });
-      localStorage.setItem("products", JSON.stringify(updatedCart));
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
     }
   };
 
@@ -70,7 +73,7 @@ export const CartProvider = ({ children }) => {
           (elemento) => elemento.id !== product.id
         );
         setCart(updatedCart);
-        localStorage.setItem("products", JSON.stringify(updatedCart));
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
         Swal.fire({
           title: "El articulo se eliminó de la tienda",
           icon: "success",
@@ -87,8 +90,15 @@ export const CartProvider = ({ children }) => {
         addToCart,
         removeFromCart,
         cart,
+        setCart,
         numberOfItemsInCart,
         setNumberOfItemsInCart,
+        cartTotal,
+        setCartTotal,
+        grossTotal,
+        setGrossTotal,
+        iva,
+        setIva
       }}
     >
       {children}
